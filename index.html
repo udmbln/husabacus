@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="sunrise">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>mh's abcs</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ===== THEMES ===== */
+:root{--r:22px;--f:'Fredoka',ui-rounded,'SF Pro Rounded','Nunito','Segoe UI',system-ui,sans-serif;--sh:0 8px 28px rgba(40,30,70,.09);--on:#fff;--ok:#1f9d6b;--bad:#e5484d}
+[data-theme=sunrise]{--bg:#fffaf5;--card:#fff;--ink:#2b2a33;--mut:#655f70;--acc:#d93f32;--ln:#f0e6dd;--c1:#ff6b5e;--c2:#ffc93c;--c3:#4fd1a5;--c4:#4fb3f6;--c5:#a78bfa}
+[data-theme=mint]{--bg:#f4fcf8;--card:#fff;--ink:#1d3029;--mut:#53665e;--acc:#0b8564;--ln:#dcefe6;--c1:#ff8a7a;--c2:#ffd966;--c3:#3fcf9f;--c4:#6cc6f5;--c5:#b7a3f8}
+[data-theme=ocean]{--bg:#f3f9ff;--card:#fff;--ink:#1b2a3d;--mut:#55657a;--acc:#1670c4;--ln:#dbe8f5;--c1:#ff7f6e;--c2:#ffd45e;--c3:#4fd1b0;--c4:#3da5f5;--c5:#8f9bff}
+[data-theme=candy]{--bg:#fff6fb;--card:#fff;--ink:#3a2340;--mut:#6d5673;--acc:#c92a84;--ln:#f6dfee;--c1:#ff6fa8;--c2:#ffd24d;--c3:#5fdcb7;--c4:#6bb8ff;--c5:#b57bff}
+[data-theme=midnight]{--bg:#15162e;--card:#222447;--ink:#f5f4ff;--mut:#b9b6d9;--acc:#ffc93c;--on:#1b1b2f;--ln:#343766;--c1:#ff7d6e;--c2:#ffd45e;--c3:#52e0b0;--c4:#5cc0ff;--c5:#b69cff;--ok:#52e0b0;--bad:#ff7d85}
+*{box-sizing:border-box}
+html{font-family:var(--f);color:var(--ink);background:var(--bg)}
+body{margin:0;min-height:100vh;background:var(--bg);font-size:17px;line-height:1.45}
+h1,h2,h3{margin:.2em 0;font-weight:600}h1{font-size:clamp(28px,6vw,44px)}h2{font-size:20px}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--c4);outline-offset:3px;border-radius:12px}
+.mut{color:var(--mut)}.sr{position:absolute;left:-9999px}
+header{display:flex;align-items:center;gap:10px;padding:14px 20px;max-width:1000px;margin:auto;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:4px;font-size:32px;font-weight:600;letter-spacing:-1px;background:none;border:0;cursor:pointer;padding:0}
+.dot{width:12px;height:12px;border-radius:50%;margin-top:12px;animation:hue 6s linear infinite}
+@keyframes hue{0%,100%{background:var(--c1)}20%{background:var(--c2)}40%{background:var(--c3)}60%{background:var(--c4)}80%{background:var(--c5)}}
+.sub{color:var(--mut)}.sp{flex:1}
+.chip{display:inline-flex;gap:6px;align-items:center;background:var(--card);border:0;border-radius:99px;padding:6px 14px;box-shadow:var(--sh);cursor:pointer;font-weight:500}
+.chip[aria-pressed=true]{background:var(--acc);color:var(--on)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+nav{display:flex;gap:8px;overflow-x:auto;padding:2px 20px 12px;max-width:1000px;margin:auto}
+nav button{white-space:nowrap;background:none;border:2px solid var(--ln);border-radius:99px;padding:6px 14px;cursor:pointer}
+nav button:hover{border-color:var(--acc)}
+main{max-width:1000px;margin:auto;padding:8px 20px 70px}
+.card{background:var(--card);border-radius:var(--r);padding:20px;box-shadow:var(--sh);margin:0 0 16px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px}
+.btn{background:var(--acc);color:var(--on);border:0;border-radius:99px;padding:12px 24px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}.btn:active{transform:scale(.97)}
+.btn.ghost{background:var(--card);color:var(--ink);border:2px solid var(--ln)}
+.btn.big{font-size:26px;padding:16px 56px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.hero{text-align:center;padding:30px 0 24px}.hero p{color:var(--mut);margin:0 0 18px}
+.seedf{margin-top:16px;display:flex;gap:8px;justify-content:center}
+input[type=text],input:not([type]),select{background:var(--card);border:2px solid var(--ln);border-radius:14px;padding:8px 12px}
+input[type=range]{accent-color:var(--acc);width:100%}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-top:8px}
+.tile{border:0;border-radius:var(--r);padding:18px 12px;text-align:center;cursor:pointer;background:var(--card);box-shadow:var(--sh);display:flex;flex-direction:column;gap:2px;transition:transform .2s}
+.tile:hover{transform:translateY(-4px) rotate(-1deg)}
+.tile .em,.bdg .em{font-size:34px}.tile small,.bdg small{color:var(--mut)}
+.c0{background:color-mix(in srgb,var(--c1) 22%,var(--card))}.c1{background:color-mix(in srgb,var(--c2) 26%,var(--card))}.c2{background:color-mix(in srgb,var(--c3) 24%,var(--card))}.c3{background:color-mix(in srgb,var(--c4) 24%,var(--card))}.c4{background:color-mix(in srgb,var(--c5) 24%,var(--card))}
+.ribbon{display:inline-block;padding:5px 24px 5px 14px;background:var(--rc);font-weight:600;font-size:15px;clip-path:polygon(0 0,100% 0,calc(100% - 10px) 50%,100% 100%,0 100%);border-radius:8px 0 0 8px}
+/* session */
+#sess{position:relative;z-index:0;isolation:isolate;overflow:hidden;background:var(--bg);color:var(--ink);border-radius:28px;padding:14px;text-align:center;min-height:80vh;transition:background .5s}
+#sess.boss{--bg:#2a1245;--card:#3b1a63;--ink:#fff3d6;--mut:#d6c3f7;--acc:#ffc93c;--on:#2a1245;--ln:#6a3aa8}
+body.in header,body.in nav{display:none}
+.top{display:flex;align-items:center;gap:12px}
+.bar{position:relative;flex:1;height:8px;background:var(--ln);border-radius:9px}
+.bar i{position:absolute;left:0;top:0;height:100%;width:0;background:var(--c3);border-radius:9px;transition:width .3s}
+.bar b{position:absolute;top:-4px;left:0;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:var(--c5);opacity:.55;transition:left .3s}
+.info{margin:14px 0;color:var(--mut);min-height:26px}
+.btdot{display:inline-block;width:14px;height:14px;border-radius:50%;background:var(--c2);vertical-align:middle;margin-left:8px}.btdot.b{animation:pu .3s}
+.qcard{margin:6px auto;padding:22px 18px;border-radius:var(--r);background:var(--card);box-shadow:var(--sh);min-height:170px;display:flex;align-items:center;justify-content:center;max-width:640px}
+.col{display:inline-block;text-align:right;font-weight:600;font-size:clamp(34px,9vw,76px);line-height:1.12;font-variant-numeric:tabular-nums}
+.ln{animation:sl .4s both;animation-delay:var(--d)}.sg{color:var(--acc);margin-right:.3em;font-weight:500}
+.rule{border-top:5px solid var(--ink);border-radius:5px;margin-top:6px}
+.line{font-weight:600;font-size:clamp(40px,11vw,92px)}.line.pop{animation:sl .3s both}.eq{color:var(--acc)}
+.qcard.ok{background:color-mix(in srgb,var(--ok) 22%,var(--card));animation:pu .5s}
+.qcard.bad{background:color-mix(in srgb,var(--bad) 20%,var(--card));animation:sh .4s}
+@keyframes sl{from{transform:translateY(16px);opacity:0}}
+@keyframes pu{50%{transform:scale(1.06)}}
+@keyframes sh{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+.ansrow{display:flex;gap:10px;justify-content:center;margin:14px 0 6px}
+#ai{width:min(300px,62%);font-size:clamp(30px,7vw,52px);text-align:center;border-radius:20px;border:3px solid var(--ln);padding:6px;background:var(--card);color:var(--ink)}
+.fb{min-height:28px;font-weight:500}
+.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:300px;margin:8px auto}
+.pad button{padding:12px;font-size:24px;border:0;border-radius:18px;background:var(--card);box-shadow:var(--sh);cursor:pointer;color:var(--ink)}
+.pad button:active{transform:scale(.94)}
+.sp2{display:flex;gap:12px;justify-content:center;align-items:center;flex-wrap:wrap;min-height:44px}
+.br{position:absolute;left:50%;top:50%;width:min(70vmin,460px);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(var(--c4),var(--c5));opacity:.18;z-index:-1;display:none}
+body.zen .br{display:block;animation:br 8s ease-in-out infinite}
+@keyframes br{50%{transform:translate(-50%,-50%) scale(1.45)}}
+body.zen .bar,body.zen #tm,body.zen #info{visibility:hidden}
+/* misc */
+.big3{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin:14px 0}
+.big3 b{display:block;font-size:34px}.big3 span{color:var(--mut)}
+.endc{text-align:center}.motiv{font-size:20px;font-weight:500}
+svg text.ax{font-size:10px;fill:var(--mut)}svg{max-width:100%}.heat{width:100%;max-width:560px}
+.plot{display:flex;gap:12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--ln)}.plot b{width:110px}.plants{font-size:24px;letter-spacing:2px}
+.bdg{text-align:center;display:flex;flex-direction:column;gap:2px;margin:0}.bdg.lock{opacity:.45;filter:grayscale(1)}
+label{display:block;margin:10px 0}output{font-weight:600;color:var(--acc)}
+table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:8px;border-bottom:1px solid var(--ln)}
+.bars div{display:flex;align-items:center;gap:8px;margin:6px 0}.bars i{display:block;height:12px;border-radius:9px;background:var(--c3)}
+.tour{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);width:min(420px,92vw);background:var(--ink);color:var(--bg);border-radius:20px;padding:16px;z-index:50;box-shadow:var(--sh)}
+.tour .btn{margin-right:8px}.hl{outline:4px solid var(--c2);outline-offset:6px;border-radius:20px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:99px;opacity:0;pointer-events:none;transition:opacity .3s;z-index:70}.toast.on{opacity:1}
+#cf{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:60}
+.wl{columns:2;column-gap:40px;font-size:20px;line-height:2.2}.ws{background:var(--card);padding:20px;border-radius:var(--r);margin-bottom:16px;color:var(--ink)}
+@media(max-width:560px){.sub{display:none}.wl{columns:1}.btn.big{padding:14px 40px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media print{body{background:#fff}header,nav,.noprint,#cf,.toast,h1{display:none!important}main{padding:0}.ws{box-shadow:none;background:#fff;color:#000;padding:0}.key{break-before:page}}
+</style>
+</head>
+<body>
+<header id="hd"></header>
+<nav aria-label="Main">
+<button data-go="home">Home</button><button data-go="stats">Stats</button><button data-go="garden">Mistake Garden</button><button data-go="badges">Badges</button><button data-go="build">Builder</button><button data-go="print">Worksheet</button><button data-go="parent">Parents</button><button data-go="settings">Settings</button>
+</nav>
+<main id="app"></main>
+<canvas id="cf" aria-hidden="true"></canvas>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<noscript>Please enable JavaScript to use mh's abcs.</noscript>
+<script>
+'use strict';
+/* ================= UTIL ================= */
+const $=(s,e=document)=>e.querySelector(s),$$=(s,e=document)=>[...e.querySelectorAll(s)];
+const now=()=>performance.now(),pad=n=>String(n).padStart(2,'0'),wait=ms=>new Promise(r=>setTimeout(r,ms));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt=s=>Math.floor(s/60)+':'+pad(Math.floor(s%60));
+const dayKey=(o=0)=>{const d=new Date();d.setDate(d.getDate()+o);return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())};
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),2200)}
+function copy(t){const fb=()=>{const a=document.createElement('textarea');a.value=t;document.body.append(a);a.select();try{document.execCommand('copy');toast('Copied!')}catch(e){prompt('Copy:',t)}a.remove()};try{navigator.clipboard.writeText(t).then(()=>toast('Copied!'),fb)}catch(e){fb()}}
+/* ================= RNG & CODES ================= */
+function hash(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
+function mulberry(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const ri=(r,a,b)=>a+Math.floor(r()*(b-a+1)),pick=(r,a)=>a[Math.floor(r()*a.length)];
+const AL='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',MODES=['classic','flash','listen','friends5','friends10','friends15','rhythm','arena','zen'];
+/* code = MMKS-[rand][rand][mode][level] so the same code always gives the same sums */
+const mkCode=(m,L)=>'MMKS-'+AL[Math.random()*32|0]+AL[Math.random()*32|0]+AL[Math.max(0,MODES.indexOf(m))]+AL[L];
+const decode=c=>({mode:MODES[AL.indexOf(c[7])]||'classic',lvl:Math.min(19,Math.max(0,AL.indexOf(c[8])))});
+/* ================= BELTS ================= */
+const bname=i=>i<10?(10-i)+(10-i==1?'st':10-i==2?'nd':10-i==3?'rd':'th')+' Kyu':'Dan '+(i-9);
+const BCOL=['#f1efe9','#ffe680','#ffc93c','#ff9f5a','#7ddc9a','#2fbf86','#7cc7f7','#3a96e6','#b79bff','#7a5af8'];
+const ribbon=i=>`<span class="ribbon" style="--rc:${i<10?BCOL[i]:`hsl(${250+(i-10)*12} 22% ${28-(i-10)}%)`};color:${i==7||i==9||i>=10?'#fff':'#2b2a33'}" role="img" aria-label="Belt ${bname(i)}">${bname(i)}</span>`;
+const lvl=i=>({dig:Math.min(5,1+(i>>2)),rows:Math.min(15,3+Math.round(i*.6)),pool:['addsub',...(i>=3?['chain']:[]),...(i>=5?['mul']:[]),...(i>=7?['div']:[]),...(i>=12?['adv']:[])]});
+const TL={addsub:'Add/Subtract',chain:'Chains',friends:'Friends',mul:'Multiply',div:'Divide',dec:'Decimals',sq:'Squares',cube:'Cubes',root:'Roots',pct:'Percent'};
+const FORCE={addsub:{type:'addsub'},chain:{type:'chain'},friends:{type:'addsub',pat:'both'},mul:{type:'mul'},div:{type:'div'},dec:{type:'adv',adv:['dec']},sq:{type:'adv',adv:['sq']},cube:{type:'adv',adv:['cube']},root:{type:'adv',adv:['root']},pct:{type:'adv',adv:['pct']}};
+/* ================= GENERATORS ================= */
+/* abacus "friends" patterns: can unit digit u take x via 5- or 10-complement? */
+const fits=(u,x,o,p)=>{let a,b;if(o=='+'){a=u<5&&x<5&&u+x>=5;b=u+x>=10}else{a=u>=5&&x<5&&u-x<5;b=u<x}return p=='f5'?a:p=='f10'?b:(a||b)};
+function addsub(c,r,pat){
+  const d=c.dig,lo=d==1?1:10**(d-1),hi=10**d-1,sg=c.sg||['+','−'];let t=0;const items=[];
+  for(let k=0;k<c.rows;k++){
+    let n=ri(r,lo,hi),s='+';
+    if(k){
+      s=pick(r,sg);
+      if(pat){const u=((t%10)+10)%10,f=o=>[1,2,3,4,5,6,7,8,9].filter(x=>fits(u,x,o,pat));let cs=f(s);if(!cs.length){s=s=='+'?'−':'+';cs=f(s)}
+        if(cs.length){const x=pick(r,cs);n=d>1?ri(r,10**(d-2),10**(d-1)-1)*10+x:x}}
+      if(s=='−'&&!c.neg&&n>t)s='+'; // never go negative unless allowed
+    }
+    t+=s=='+'?n:-n;items.push({s,n});
+  }
+  return{items,ans:t,topic:pat?'friends':'addsub',col:true};
+}
+function mul(c,r){const d=c.dig;let a,b;
+  if(d<=1){a=ri(r,2,9);b=ri(r,2,9)}else if(d==2){a=ri(r,10,99);b=r()<.4?ri(r,11,99):ri(r,2,9)}else{a=ri(r,100,999);b=r()<.5?ri(r,11,99):ri(r,2,9)}
+  return{text:a+' × '+b,ans:a*b,topic:'mul'}}
+function div(c,r){const d=Math.min(c.dig,3),b=ri(r,2,d>=3?12:9),q=ri(r,d==1?2:10**(d-1),10**d-1),m=c.rem&&r()<.7?ri(r,1,b-1):0; // divisor>=2, so never /0
+  return{text:(b*q+m)+' ÷ '+b,ans:m?q+' r '+m:q,topic:'div'}}
+function adv(c,r){const k=pick(r,c.adv||['dec','sq','cube','root','pct']);
+  if(k=='dec'){let a=ri(r,11,999),b=ri(r,11,999),s=pick(r,['+','−']);if(s=='−'&&a<b&&!c.neg)[a,b]=[b,a];return{text:(a/10).toFixed(1)+' '+s+' '+(b/10).toFixed(1),ans:(s=='+'?a+b:a-b)/10,topic:'dec'}}
+  if(k=='sq'){const n=ri(r,2,8+c.dig*2);return{text:n+'²',ans:n*n,topic:'sq'}}
+  if(k=='cube'){const n=ri(r,2,4+c.dig);return{text:n+'³',ans:n**3,topic:'cube'}}
+  if(k=='root'){const n=ri(r,2,8+c.dig*2);return{text:'√'+n*n,ans:n,topic:'root'}}
+  const p=pick(r,[5,10,15,20,25,50,75]),b=ri(r,1,40)*20;return{text:p+'% of '+b,ans:p*b/100,topic:'pct'}}
+function genQ(c,r,boss){
+  if(boss)c={...c,dig:Math.min(6,c.dig+1),rows:Math.min(15,c.rows+2)};
+  const t=c.type=='mix'||c.type=='custom'?pick(r,c.pool):c.type;let q;
+  if(t=='addsub')q=addsub(c,r,c.pat);
+  else if(t=='chain'){q=addsub({...c,rows:ri(r,3,6)},r,null);q.col=false;q.topic='chain'}
+  else if(t=='mul')q=mul(c,r);else if(t=='div')q=div(c,r);else q=adv(c,r);
+  q.boss=!!boss;q.d=c.dig+(c.rows>>2);q.id=Math.random();
+  q.text=q.text||q.items.map((o,k)=>(k?o.s+' ':'')+o.n).join(' ');
+  q.ans=String(q.ans);return q}
+function check(q,v){v=v.trim().replace('−','-').replace(',','.');const a=q.ans;
+  if(a.includes(' r ')){const m=v.match(/^(\d+)\s*r\s*(\d+)$/i),e=a.split(' r ');return!!m&&+m[1]==+e[0]&&+m[2]==+e[1]}
+  return/^-?\d*\.?\d+$/.test(v)&&Math.abs(parseFloat(v)-parseFloat(a))<1e-9}
+/* ================= STORAGE & STATE ================= */
+const Store={m:{},get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):(k in this.m?this.m[k]:d)}catch(e){return k in this.m?this.m[k]:d}},set(k,v){this.m[k]=v;try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const newProfile=(n,a)=>({id:Date.now()+Math.random(),name:n,av:a,xp:0,belt:0,streak:0,bestStreak:0,last:'',days:{},hist:[],tp:{},mist:[],bloom:{},badges:{},rec:{},ghost:{},arena:[],presets:[],tot:0,lastTimes:[],dailies:[],flags:{}});
+let S=Store.get('mmks',null)||{theme:'sunrise',mute:false,tour:false,set:{flash:1,rate:1,voice:'',lang:'en-US',bpm:60},cur:0,profiles:[newProfile('Player','🦊')]};
+S.set=Object.assign({flash:1,rate:1,voice:'',lang:'en-US',bpm:60},S.set||{});
+S.profiles.forEach(p=>{const d=newProfile('','');for(const k in d)if(!(k in p))p[k]=d[k]});
+const P=()=>S.profiles[S.cur]||S.profiles[0],save=()=>Store.set('mmks',S);
+const streak=p=>p.last==dayKey()||p.last==dayKey(-1)?p.streak:0;
+/* ================= AUDIO / SPEECH / METRONOME ================= */
+const Au={c:null,ctx(){if(!this.c)try{this.c=new(window.AudioContext||window.webkitAudioContext)()}catch(e){}return this.c},
+  tone(f,d,t=0,ty='sine',v=.12){if(S.mute)return;const c=this.ctx();if(!c)return;try{const o=c.createOscillator(),g=c.createGain(),t0=c.currentTime+t;o.type=ty;o.frequency.value=f;g.gain.setValueAtTime(0,t0);g.gain.linearRampToValueAtTime(v,t0+.01);g.gain.exponentialRampToValueAtTime(.001,t0+d);o.connect(g);g.connect(c.destination);o.start(t0);o.stop(t0+d+.05)}catch(e){}},
+  ok(){this.tone(660,.18);this.tone(880,.28,.1)},bad(){this.tone(210,.3,0,'triangle')},
+  buzz(ms){if(!S.mute&&navigator.vibrate)try{navigator.vibrate(ms)}catch(e){}}};
+const WD={en:['plus','minus'],es:['más','menos'],fr:['plus','moins'],de:['plus','minus'],hi:['प्लस','माइनस']};
+const Sp={ok:'speechSynthesis' in window&&'SpeechSynthesisUtterance' in window,
+  voices(){try{return this.ok?speechSynthesis.getVoices():[]}catch(e){return[]}},
+  cancel(){try{this.ok&&speechSynthesis.cancel()}catch(e){}},
+  words(){const v=this.voices().find(v=>v.name==S.set.voice);return WD[(v?v.lang:S.set.lang).slice(0,2)]||['+','−']},
+  say(t){return new Promise(res=>{if(!this.ok)return res(false);try{const u=new SpeechSynthesisUtterance(t),v=this.voices().find(v=>v.name==S.set.voice);u.rate=S.set.rate;u.lang=S.set.lang;if(v){u.voice=v;u.lang=v.lang}let d=0;const f=()=>{if(!d){d=1;res(true)}};u.onend=f;u.onerror=f;setTimeout(f,6000);speechSynthesis.speak(u)}catch(e){res(false)}})}};
+const Met={id:0,t0:0,n:0,start(bpm,cb){this.stop();this.t0=now();this.n=0;const f=()=>{Au.tone(this.n++%4==0?1000:700,.05,0,'square',.05);cb&&cb()};f();this.id=setInterval(f,60000/bpm)},stop(){clearInterval(this.id)}};
+/* ================= CONFETTI ================= */
+function confetti(n=70){if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;const c=$('#cf'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;const cols=['#ff6b5e','#ffc93c','#4fd1a5','#4fb3f6','#a78bfa'];
+  const ps=Array.from({length:n},()=>({x:innerWidth/2,y:innerHeight*.4,vx:(Math.random()-.5)*14,vy:-Math.random()*13-3,s:5+Math.random()*6,c:cols[Math.random()*5|0],r:Math.random()*6}));let f=0;
+  (function a(){x.clearRect(0,0,c.width,c.height);ps.forEach(p=>{p.vy+=.35;p.x+=p.vx;p.y+=p.vy;p.r+=.2;x.fillStyle=p.c;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6);x.restore()});if(++f<110)requestAnimationFrame(a);else x.clearRect(0,0,c.width,c.height)})()}
+/* ================= BADGES ================= */
+const B=[
+['first','🌱','First Steps','Finish a session',(p,c)=>c.n>0],['c100','💯','Century','Solve 100 sums',p=>p.tot>=100],['k1','🏔️','Thousand Club','Solve 1000 sums',p=>p.tot>=1000],
+['light','⚡','Lightning','10 correct under 20s',(p,c)=>c.cor>=10&&c.tot<20],['nm','🎯','No Mistakes ×20','20 sums, zero errors',(p,c)=>c.n>=20&&c.cor==c.n],
+['night','🦉','Night Owl','Practise after 10pm',(p,c)=>c.n>0&&(c.h>=22||c.h<4)],['early','🐦','Early Bird','Practise before 7am',(p,c)=>c.n>0&&c.h>=4&&c.h<7],
+['flash','🎇','Flash Master','Flash ≥90% over 10+',(p,c)=>c.mode=='flash'&&c.n>=10&&c.acc>=.9],['ear','👂','Good Listener','Finish a Listen session',(p,c)=>c.mode=='listen'],
+['fr','🤝','Friendly','Friends drill ≥90%',(p,c)=>c.mode.startsWith('friends')&&c.n>=10&&c.acc>=.9],['flow','🌊','In the Flow','Flow score 80+',(p,c)=>c.flow>=80],
+['a20','🏟️','Arena 20','Score 20 in Arena',(p,c)=>c.mode=='arena'&&c.score>=20],['a50','🏆','Arena 50','Score 50 in Arena',(p,c)=>c.mode=='arena'&&c.score>=50],
+['s3','🔥','3-Day Flame','3 days in a row',p=>p.streak>=3],['s7','🔥','Week Warrior','7 days in a row',p=>p.streak>=7],['s30','☄️','Monthly Master','30 days in a row',p=>p.streak>=30],
+['gard','🌻','Gardener','Bloom 10 flowers',p=>Object.values(p.bloom).reduce((a,b)=>a+b,0)>=10],['boss','👹','Boss Slayer','Beat a boss sum',(p,c)=>c.boss],
+['k5','🎀','Rising Belt','Reach 5th Kyu',p=>p.belt>=5],['dan','🥋','Dan Level','Reach Dan 1',p=>p.belt>=10],
+['day','📅','Daily Doer','Finish a daily',(p,c)=>c.mode=='daily'],['d7','🗓️','Daily ×7','Finish 7 dailies',p=>p.dailies.length>=7],
+['zen','🧘','Zen Mind','Zen session of 10+',(p,c)=>c.mode=='zen'&&c.n>=10],['spd','🚀','Speed Demon','Avg <3s over 10+',(p,c)=>c.n>=10&&c.avg<3&&c.acc>=.8],
+['xp1','⭐','1000 XP','Earn 1000 XP',p=>p.xp>=1000],['seed','🔗','Seed Sharer','Play a shared code',(p,c)=>c.shared],['ws','🖨️','Worksheet Maker','Create a worksheet',p=>p.flags.print]];
+const CTX0={mode:'',n:0,cor:0,acc:0,avg:99,tot:0,h:12,flow:0,score:0,boss:false,shared:0};
+function award(p,x){const c={...CTX0,...x},nb=B.filter(b=>!p.badges[b[0]]&&b[4](p,c));nb.forEach(b=>p.badges[b[0]]=Date.now());return nb}
+/* ================= SESSION ENGINE ================= */
+let sess=null,view='home',lastEnd=null,pid=0;
+const TILES=[['classic','➕','Classic','Mixed sums at your belt'],['flash','⚡','Flash','Numbers flash, you total'],['listen','👂','Listen','Hear the numbers'],['friends5','🖐️','Friends 5','Complements of 5'],['friends10','🔟','Friends 10','Complements of 10'],['friends15','🤝','Friends 5+10','Combined patterns'],['rhythm','🥁','Rhythm','Answer on the beat'],['arena','⏱️','Arena 60s','Beat the clock'],['zen','🧘','Zen','Calm focus']];
+function stopAll(){if(sess){clearInterval(sess.tmr);clearTimeout(sess.to)}sess=null;pid++;Met.stop();Sp.cancel();document.body.classList.remove('in','zen')}
+function start(mode,o={}){
+  stopAll();const p=P();let code=o.code,shared=0,L=o.lvl??p.belt;
+  if(code&&!o.exact){const d=decode(code);mode=d.mode;L=d.lvl;shared=1}
+  if(!code)code=mode=='daily'?'DAY-'+dayKey():mkCode(MODES.includes(mode)?mode:'classic',L);
+  const Lv=lvl(L);let c={type:'mix',dig:Lv.dig,rows:Lv.rows,neg:false,rem:L>=9,pool:Lv.pool},n=10,style=mode,lim=0;
+  if(mode=='flash'||mode=='listen'){c.type='addsub';c.rows=Math.max(3,Math.min(Lv.rows,8))}
+  else if(mode.startsWith('friends')){c.type='addsub';c.pat={friends5:'f5',friends10:'f10',friends15:'both'}[mode];c.rows=Math.max(4,Lv.rows);c.dig=Math.min(Lv.dig,3)}
+  else if(mode=='rhythm')c.rows=Math.min(c.rows,3);
+  else if(mode=='arena')n=Infinity;
+  else if(mode=='daily')c={type:'mix',dig:2,rows:5,neg:false,rem:false,pool:['addsub','chain','mul','div','addsub','adv']};
+  else if(mode=='grading'){const L2=lvl(Math.min(19,p.belt+1));c={type:'mix',dig:L2.dig,rows:L2.rows,neg:false,rem:p.belt+1>=9,pool:L2.pool};n=20;lim=20*(6+L2.rows*1.6)}
+  else if(mode=='custom'){c={...o.cfg};n=c.n;style=c.delivery}
+  else if(mode=='review')n=o.pool.length;
+  if(o.force)c={...c,type:o.force.type,pat:o.force.pat,adv:o.force.adv,pool:[o.force.type]};
+  const gkey=mode+'|'+L+(o.force?o.force.type+(o.force.pat||''):'');
+  sess={mode,style,code,shared,o:{mode,lvl:L,cfg:o.cfg,force:o.force},c,n,i:0,res:[],mist:[],xp:0,t0:now(),rnd:mulberry(hash(code)),L,lim,combo:0,run:0,maxRun:0,score:0,flow:[],cum:[],gkey,pool:o.pool,replays:0,
+    ghost:mode=='arena'||mode=='review'?null:p.ghost[gkey]};
+  renderSess(sess);sess.tmr=setInterval(tick,100);
+  if(mode=='rhythm')Met.start(S.set.bpm,()=>{const b=$('#bt');if(b){b.classList.remove('b');void b.offsetWidth;b.classList.add('b')}});
+  nextQ();
+}
+const PAD=['7','8','9','4','5','6','1','2','3','−','0','.','r','⌫','Enter'],PADL={'−':'minus','⌫':'Backspace','Enter':'Enter','r':'remainder','.':'decimal point'};
+function renderSess(s){
+  document.body.classList.add('in');if(s.mode=='zen')document.body.classList.add('zen');view='sess';
+  const fl=s.style=='flash'||s.style=='listen';
+  $('#app').innerHTML=`<section id="sess"><div class="br" aria-hidden="true"></div>
+  <div class="top"><button class="chip" data-act="quit" aria-label="End session">✕</button><div class="bar" role="progressbar" aria-label="Progress"><i id="pb"></i><b id="gh" ${s.ghost?'':'hidden'} title="Your best run"></b></div><span id="tm" class="chip">0:00</span></div>
+  <div id="info" class="info"></div><div id="qc" class="qcard" aria-live="polite"></div>
+  <div class="ansrow"><input id="ai" inputmode="none" autocomplete="off" aria-label="Your answer" enterkeyhint="done"><button class="btn" data-act="submit">Enter</button></div>
+  <div id="fb" class="fb" role="status" aria-live="polite"></div>
+  <div class="sp2"><button id="rp" class="btn ghost" data-act="replay" ${fl?'':'hidden'}>↺ Replay once (−5 XP)</button>${s.style=='flash'?`<label>Flash speed <output>${(s.c.speed||S.set.flash)}s</output><input type="range" data-set="flash" min=".3" max="3" step=".1" value="${s.c.speed||S.set.flash}" aria-label="Flash speed"></label>`:''}</div>
+  <div class="pad">${PAD.map(k=>`<button data-k="${k}" aria-label="${PADL[k]||k}">${k=='Enter'?'↵':k}</button>`).join('')}</div></section>`;
+}
+function updInfo(){const s=sess;if(!s)return;const mult=Math.min(5,1+(s.combo/5|0)),L=bname(s.L);
+  $('#info').innerHTML=(s.boss?'👹 <b>BOSS ROUND</b> · ×3 XP':s.mode=='arena'?`Score <b>${s.score}</b> · Combo ×${mult}`:`${s.mode=='review'?'Mistake review':s.mode} · ${L} · ${Math.min(s.i+1,s.n)}/${s.n} · XP ${s.xp}`)+(s.mode=='rhythm'?'<i id="bt" class="btdot"></i>':'')}
+function bar(){const s=sess;if(!s)return;const e=(now()-s.t0)/1000;$('#pb').style.width=(s.mode=='arena'?Math.min(100,e/60*100):s.i/s.n*100)+'%'}
+function tick(){const s=sess;if(!s)return;const e=(now()-s.t0)/1000;
+  if(s.mode=='arena'){const l=Math.max(0,60-e);$('#tm').textContent=Math.ceil(l)+'s';bar();if(l<=0)return end()}
+  else if(s.mode=='grading'){const l=s.lim-e;$('#tm').textContent=fmt(Math.max(0,l));if(l<=0)return end()}
+  else $('#tm').textContent=fmt(e);
+  if(s.ghost){let k=0;while(k<s.ghost.cum.length&&s.ghost.cum[k]<=e)k++;$('#gh').style.left=(k/s.n*100)+'%'}}
+const qhtml=q=>q.col?`<div class="col" role="img" aria-label="${esc(q.text)}">${q.items.map((o,k)=>`<div class="ln" style="--d:${k*60}ms">${k?`<span class="sg">${o.s}</span>`:''}${o.n}</div>`).join('')}<div class="rule"></div></div>`:`<div class="line">${esc(q.text)} <span class="eq">=</span></div>`;
+function nextQ(){const s=sess;if(!s)return;if(s.i>=s.n)return end();
+  const boss=!['arena','grading','review'].includes(s.mode)&&(s.i+1)%10==0;
+  s.boss=boss;s.q=s.mode=='review'?s.pool[s.i]:genQ(s.c,s.rnd,boss);s.lock=0;s.ready=0;
+  $('#sess').classList.toggle('boss',boss);if(boss)Au.tone(300,.4,0,'sawtooth',.06);
+  const qc=$('#qc'),ai=$('#ai');qc.className='qcard';$('#fb').textContent='';ai.value='';updInfo();bar();
+  if(s.style=='flash'||s.style=='listen'){$('#rp').hidden=false;present(s.q)}
+  else{qc.innerHTML=qhtml(s.q);s.ready=1;s.qt0=now();ai.disabled=false;ai.focus()}}
+/* flash / listen presentation of the numbers */
+async function present(q){const s=sess,my=++pid,qc=$('#qc'),ai=$('#ai');s.ready=0;ai.disabled=true;
+  const sp=(s.c.speed||S.set.flash)*1000,listen=s.style=='listen'&&Sp.ok;
+  if(s.style=='listen'&&!Sp.ok&&!s.warned){s.warned=1;toast('Speech unavailable – showing numbers instead')}
+  const W=Sp.words();
+  for(let k=0;k<q.items.length;k++){if(my!=pid||sess!==s)return;const o=q.items[k];
+    if(listen){qc.innerHTML='<div class="line">🔊</div>';await Sp.say((k?W[o.s=='+'?0:1]+' ':'')+o.n);await wait(250)}
+    else{qc.innerHTML=`<div class="line pop">${k?o.s+' ':''}${o.n}</div>`;await wait(sp);if(my!=pid)return;qc.innerHTML='<div class="line">&nbsp;</div>';await wait(120)}}
+  if(my!=pid||sess!==s)return;qc.innerHTML='<div class="line">?</div>';ai.disabled=false;ai.focus();s.ready=1;s.qt0=now();
+  $('#rp').hidden=!!q.rep}
+function submit(){const s=sess;if(!s||!s.ready||s.lock)return;const v=$('#ai').value;if(!v.trim())return;
+  s.lock=1;const dt=(now()-s.qt0)/1000,q=s.q,ok=check(q,v),z=s.mode=='zen',qc=$('#qc');let tm=null;
+  if(s.mode=='rhythm'){const per=60000/S.set.bpm,off=(now()-Met.t0)%per;tm=1-Math.min(off,per-off)/(per/2);s.flow.push(ok?50+50*tm:0)}
+  s.cum.push(+((now()-s.t0)/1000).toFixed(2));s.res.push({ok,dt,topic:q.topic,boss:q.boss});
+  if(ok){s.combo++;s.run++;s.maxRun=Math.max(s.maxRun,s.run);const mult=s.mode=='arena'?Math.min(5,1+(s.combo/5|0)):1;s.score+=mult;
+    s.xp+=Math.round((4+q.d*2+(dt<4?3:0))*(q.boss?3:1)*mult)+(q.boss?20:0);if(s.run%5==0)confetti(40)}
+  else{s.combo=0;s.run=0;if(s.mode!='review')s.mist.push({id:Math.random(),text:q.text,items:q.items,col:q.col,ans:q.ans,topic:q.topic})}
+  if(s.mode=='review'&&ok){const p=P();p.mist=p.mist.filter(m=>m.id!==q.id);p.bloom[q.topic]=(p.bloom[q.topic]||0)+1;save()}
+  if(!z){qc.classList.add(ok?'ok':'bad');$('#fb').textContent=ok?'✓ Correct!'+(tm!=null?` Timing ${Math.round(tm*100)}%`:''):'Answer: '+q.ans}
+  if(ok)Au.ok();else{Au.bad();Au.buzz(120)}
+  s.i++;updInfo();bar();s.to=setTimeout(nextQ,z?200:s.mode=='arena'?350:ok?650:1500)}
+const motiv=(acc,p)=>(acc==1?'Flawless! Every single one right. 🌟':acc>=.9?'Sharp work — nearly perfect!':acc>=.7?'Good job! Mistakes are just seeds — water them in the garden.':'Every attempt grows your brain. Try a Friends drill next!')+(streak(p)>=2?` ${streak(p)} days in a row, nice rhythm!`:'');
+function end(){const s=sess;if(!s)return;stopAll();const p=P(),n=s.res.length;if(!n){go('home');return}
+  const cor=s.res.filter(r=>r.ok).length,acc=cor/n,el=(now()-s.t0)/1000,avg=s.res.reduce((a,r)=>a+r.dt,0)/n,h=new Date().getHours(),day=dayKey();
+  const flow=s.flow.length?Math.round(s.flow.reduce((a,b)=>a+b,0)/s.flow.length):0,passed=s.mode=='grading'&&n==20&&acc>=.85&&el<=s.lim;
+  if(p.last!=day){p.streak=p.last==dayKey(-1)?p.streak+1:1;p.last=day}p.bestStreak=Math.max(p.bestStreak||0,p.streak);
+  const dd=p.days[day]||(p.days[day]={q:0,s:0});dd.q+=n;dd.s+=el;
+  s.res.forEach(r=>{const t=p.tp[r.topic]||(p.tp[r.topic]={c:0,w:0});r.ok?t.c++:t.w++});
+  p.hist.push({t:Date.now(),mode:s.mode,n,acc,avg,xp:s.xp,flow});p.hist=p.hist.slice(-120);p.lastTimes=s.res.map(r=>+r.dt.toFixed(2));
+  p.mist=[...s.mist,...p.mist].slice(0,60);p.xp+=s.xp;p.tot+=n;
+  const R=p.rec;R.run=Math.max(R.run||0,s.maxRun);if(n>=10){R.avg=Math.min(R.avg??99,avg);R.acc=Math.max(R.acc||0,acc)}R.xp=Math.max(R.xp||0,s.xp);R.flow=Math.max(R.flow||0,flow);
+  if(s.mode=='arena'){p.arena.push({s:s.score,d:day});p.arena.sort((a,b)=>b.s-a.s);p.arena=p.arena.slice(0,10)}
+  if(s.mode=='daily'){p.flags.dailyDay=day;if(!p.dailies.includes(day))p.dailies.push(day)}
+  if(passed){p.belt=Math.min(19,p.belt+1);confetti(180)}
+  if(s.cum.length==s.n&&acc>=.8&&(!s.ghost||s.cum[s.cum.length-1]<s.ghost.total))p.ghost[s.gkey]={total:s.cum[s.cum.length-1],cum:s.cum};
+  const nb=award(p,{mode:s.mode,n,cor,acc,avg,tot:el,h,flow,score:s.score,boss:s.res.some(r=>r.boss&&r.ok),shared:s.shared});save();
+  showEnd(s,{cor,n,acc,avg,flow,nb,passed,m:motiv(acc,p)})}
+function showEnd(s,d){view='end';lastEnd=s;hdr();const p=P();
+  $('#app').innerHTML=`<section class="card endc"><h1>${d.passed?'🎉 Promoted to '+bname(p.belt)+'!':s.mode=='grading'?'Grading result':'Session complete'}</h1>
+  <div class="big3"><div><b>${s.mode=='arena'?s.score:d.cor+'/'+d.n}</b><span>${s.mode=='arena'?'score':'correct'}</span></div><div><b>${Math.round(d.acc*100)}%</b><span>accuracy</span></div><div><b>${d.avg.toFixed(1)}s</b><span>avg time</span></div><div><b>+${s.xp}</b><span>XP</span></div></div>
+  ${d.flow?`<p>🌊 Flow score: <b>${d.flow}</b></p>`:''}${s.mode=='grading'&&!d.passed?'<p class="mut">You need 85% accuracy within the time limit. You can do it!</p>':''}
+  ${d.nb.length?`<h3>New badges</h3><div class="chips" style="justify-content:center">${d.nb.map(b=>`<span class="chip">${b[1]} ${b[2]}</span>`).join('')}</div>`:''}
+  ${s.mist.length?`<p>🌱 ${s.mist.length} mistake seed${s.mist.length>1?'s':''} planted in your Mistake Garden.</p>`:''}
+  ${s.mode=='arena'?`<h3>Top 10</h3><ol style="display:inline-block;text-align:left">${p.arena.map(a=>`<li>${a.s} pts · ${a.d}</li>`).join('')}</ol>`:''}
+  <p class="motiv">${d.m}</p><p class="mut">Code: <b>${esc(s.code)}</b></p>
+  <div class="btns" style="justify-content:center">${s.mode!='review'?'<button class="btn" data-act="retry">Retry same seed</button>':''}<button class="btn" data-act="again">New session</button><button class="btn ghost" data-act="share">Share seed</button><button class="btn ghost" data-go="home">Home</button></div></section>`}
+/* ================= UI ================= */
+const V={};
+function hdr(){const p=P();$('#hd').innerHTML=`<button class="logo" id="logo" data-go="home" aria-label="mmks home">mmks<i class="dot"></i></button><span class="sub">mh's abcs</span><span class="sp"></span>${ribbon(p.belt)}<span class="chip" aria-label="${streak(p)} day streak">🔥 ${streak(p)}</span><span class="chip" aria-label="${p.xp} XP">⭐ ${p.xp}</span><button class="chip" data-act="mute" aria-pressed="${S.mute}" aria-label="Mute sounds">${S.mute?'🔇':'🔊'}</button><button class="chip" data-go="settings" aria-label="Profile and settings">${p.av} ${esc(p.name)}</button>`}
+function go(v,a){stopAll();$('#tour')?.remove();$$('.hl').forEach(e=>e.classList.remove('hl'));view=v;V[v](a);hdr();scrollTo(0,0);if(v=='home'&&!S.tour)setTimeout(()=>tour(0),300)}
+V.home=()=>{const p=P(),done=p.flags.dailyDay==dayKey();
+  $('#app').innerHTML=`<section class="hero"><h1>mh's abcs</h1><p>Little sums, big mind.</p><button id="startBtn" class="btn big" data-start="classic">Start ▶</button>
+  <form class="seedf" data-seed><label class="sr" for="sd">Share code</label><input id="sd" placeholder="Have a code? MMKS-7F3K" maxlength="9" autocapitalize="characters" autocomplete="off"><button class="btn ghost">Go</button></form></section>
+  <div class="grid2"><div class="card" id="daily"><h2>📅 Daily challenge</h2><p class="mut">10 sums, the same for everyone today.</p><p>${done?'Done ✓ · ':''}Next in <b id="cd"></b></p><button class="btn" data-start="daily">${done?'Play again':'Play'}</button></div>
+  <div class="card" id="belt"><h2>Your belt</h2><p>${ribbon(p.belt)}</p><p class="mut">Pass a 20-sum grading test (85%+ in time) to move up.</p>${p.belt<19?'<button class="btn" data-start="grading">Grading test</button>':'<p>Top belt! 🎉</p>'}</div></div>
+  <h2>Practice modes</h2><div id="tiles" class="tiles">${TILES.map((t,i)=>`<button class="tile c${i%5}" data-start="${t[0]}"><span class="em" aria-hidden="true">${t[1]}</span><b>${t[2]}</b><small>${t[3]}</small></button>`).join('')}</div>`;cd()};
+function cd(){const e=$('#cd');if(!e)return;const d=new Date(),n=new Date(d);n.setHours(24,0,0,0);const s=Math.floor((n-d)/1000);e.textContent=`${pad(s/3600|0)}:${pad(s/60%60|0)}:${pad(s%60)}`}
+function chart(d,w,h,col,max,u,label){if(!d.length)return'<p class="mut">No data yet — play a session!</p>';const m=max??Math.max(...d,1),px=i=>d.length<2?w/2:10+i*(w-20)/(d.length-1),py=v=>h-14-(v/m)*(h-28);
+  return`<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="${label}"><polyline points="${d.map((v,i)=>px(i)+','+py(v)).join(' ')}" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="stroke:${col}"/>${d.map((v,i)=>`<circle cx="${px(i)}" cy="${py(v)}" r="4" style="fill:${col}"><title>${v}${u}</title></circle>`).join('')}<text x="4" y="11" class="ax">${m}${u}</text><text x="4" y="${h-2}" class="ax">0</text></svg>`}
+function heat(p){const t=new Date();t.setHours(0,0,0,0);const st=new Date(t);st.setDate(t.getDate()-t.getDay()-77);let o='';
+  for(let c=0;c<12;c++)for(let r=0;r<7;r++){const d=new Date(st);d.setDate(st.getDate()+c*7+r);if(d>t)continue;const k=dayKey(Math.round((d-t)/864e5)),q=(p.days[k]||{}).q||0;
+    o+=`<rect x="${c*18}" y="${r*18}" width="14" height="14" rx="4" style="fill:${q?'var(--c3)':'var(--ln)'};fill-opacity:${q?q<10?.3:q<30?.55:q<60?.8:1:1}"><title>${k}: ${q} sums</title></rect>`}
+  return`<svg class="heat" viewBox="0 0 216 126" role="img" aria-label="Practice heatmap, last 12 weeks">${o}</svg>`}
+V.stats=()=>{const p=P(),R=p.rec,ac=p.hist.slice(-20).map(h=>Math.round(h.acc*100)),
+  tp=Object.entries(p.tp).filter(([k,v])=>v.c+v.w>=5).map(([k,v])=>[k,v.c/(v.c+v.w)]).sort((a,b)=>a[1]-b[1]),wk=tp[0];
+  $('#app').innerHTML=`<h1>Stats</h1><div class="grid2"><div class="card"><h2>Accuracy by session</h2>${chart(ac,320,150,'var(--c3)',100,'%','Accuracy line chart')}</div><div class="card"><h2>Seconds per question (last session)</h2>${chart(p.lastTimes,320,150,'var(--c4)',null,'s','Speed per question chart')}</div></div>
+  <div class="card"><h2>Last 12 weeks</h2>${heat(p)}</div>
+  <div class="grid2"><div class="card"><h2>Personal records</h2><ul><li>Total sums: <b>${p.tot}</b> · XP: <b>${p.xp}</b></li><li>Best day streak: <b>${p.bestStreak||0}</b></li><li>Longest correct run: <b>${R.run||0}</b></li><li>Fastest average: <b>${R.avg!=null?R.avg.toFixed(1)+'s':'–'}</b></li><li>Best accuracy: <b>${R.acc?Math.round(R.acc*100)+'%':'–'}</b></li><li>Most XP in a session: <b>${R.xp||0}</b></li><li>Best arena: <b>${p.arena[0]?p.arena[0].s:'–'}</b> · Best flow: <b>${R.flow||'–'}</b></li></ul></div>
+  <div class="card"><h2>Weakest skill</h2>${wk?`<p><b>${TL[wk[0]]}</b> is at ${Math.round(wk[1]*100)}% — let's train it!</p><button class="btn" data-drill="${wk[0]}">Practise ${TL[wk[0]]}</button>`:'<p class="mut">Play a few more sums and I will find your weakest skill.</p>'}</div></div>`};
+V.garden=()=>{const p=P(),tops=[...new Set([...Object.keys(p.tp),...Object.keys(p.bloom),...p.mist.map(m=>m.topic)])];
+  const rows=tops.map(k=>{const b=p.bloom[k]||0,w=p.mist.filter(m=>m.topic==k).length;return`<div class="plot"><b>${TL[k]||k}</b><div class="plants" role="img" aria-label="${b} flowers, ${w} wilted">${'🌸'.repeat(Math.min(b,12))}${'🥀'.repeat(Math.min(w,10))}${!b&&!w?'🌱':''}</div></div>`}).join('')||'<p class="mut">Your garden is empty — it grows as you practise.</p>';
+  $('#app').innerHTML=`<h1>Mistake Garden</h1><p class="mut">Wrong answers become seeds. Answer them correctly to make flowers bloom; wilted plants show weak topics.</p><div class="card">${rows}</div>${p.mist.length?`<button class="btn big" data-act="review">Water ${p.mist.length} seed${p.mist.length>1?'s':''} 🌧️</button>`:'<p>No seeds waiting. 🌼</p>'}`};
+V.badges=()=>{const p=P();$('#app').innerHTML=`<h1>Badges <small class="mut">${Object.keys(p.badges).length}/${B.length}</small></h1><div class="grid3">${B.map(b=>`<div class="card bdg ${p.badges[b[0]]?'':'lock'}" aria-label="${b[2]}: ${p.badges[b[0]]?'earned':'locked'}. ${b[3]}"><span class="em">${b[1]}</span><b>${b[2]}</b><small>${b[3]}</small></div>`).join('')}</div>`};
+/* custom session builder */
+let BC={dig:2,rows:5,ops:['+','−'],speed:1,n:10,neg:false,rem:false,delivery:'classic'};
+function cfgBC(){const o=BC.ops,pool=[];if(o.includes('+')||o.includes('−'))pool.push('addsub');if(o.includes('×'))pool.push('mul');if(o.includes('÷'))pool.push('div');if(!pool.length)pool.push('addsub');
+  const sg=o.filter(x=>x=='+'||x=='−');const fl=BC.delivery!='classic';
+  return{type:'custom',dig:BC.dig,rows:fl?Math.max(3,BC.rows):BC.rows,neg:BC.neg,rem:BC.rem,speed:BC.speed,n:BC.n,delivery:BC.delivery,pool:fl?['addsub']:pool,sg:sg.length?sg:['+','−']}}
+function prev(){const e=$('#prev');if(e)e.textContent=genQ(cfgBC(),mulberry(Math.random()*1e9|0)).text}
+V.build=()=>{const p=P(),sl=(k,l,a,b,st)=>`<label>${l}: <output id="o_${k}">${BC[k]}</output><input type="range" data-bc="${k}" min="${a}" max="${b}" step="${st||1}" value="${BC[k]}" aria-label="${l}"></label>`;
+  $('#app').innerHTML=`<h1>Custom session</h1><div class="grid2"><div class="card">${sl('dig','Digits',1,6)}${sl('rows','Rows',2,15)}${sl('speed','Flash speed (s)',.3,3,.1)}${sl('n','Questions',5,50)}
+  <fieldset style="border:0;padding:0"><legend>Operations</legend><div class="chips">${['+','−','×','÷'].map(o=>`<label class="chip"><input type="checkbox" data-bc="ops" value="${o}" ${BC.ops.includes(o)?'checked':''}> ${o}</label>`).join('')}</div></fieldset>
+  <label><input type="checkbox" data-bc="neg" ${BC.neg?'checked':''}> Allow negative results</label><label><input type="checkbox" data-bc="rem" ${BC.rem?'checked':''}> Division with remainders</label>
+  <label>Delivery <select data-bc="delivery"><option value="classic">Written</option><option value="flash" ${BC.delivery=='flash'?'selected':''}>Flash</option><option value="listen" ${BC.delivery=='listen'?'selected':''}>Listen</option></select></label></div>
+  <div class="card"><h2>Preview</h2><div class="line" style="font-size:36px" id="prev"></div><div class="btns"><button class="btn ghost" data-act="newprev">Another</button><button class="btn" data-act="startcustom">Start ▶</button></div>
+  <h2 style="margin-top:20px">Presets (${p.presets.length}/5)</h2>${p.presets.map((x,i)=>`<div class="chips" style="margin:6px 0"><button class="chip" data-ld="${i}">${esc(x.name)}</button><button class="chip" data-dp="${i}" aria-label="Delete preset ${esc(x.name)}">🗑</button></div>`).join('')}
+  <form data-pre><label class="sr" for="pn">Preset name</label><input id="pn" name="nm" placeholder="Preset name" maxlength="16" required> <button class="btn ghost">Save</button></form></div></div>`;prev()};
+/* printable worksheet */
+V.print=()=>{$('#app').innerHTML=`<h1>Worksheet</h1><div class="card noprint"><form data-ws><label>Sums: <output id="wn">30</output><input type="range" id="wcount" min="20" max="50" value="30" aria-label="Number of sums"></label>
+  <label>Type <select id="wtype"><option value="mix">Mixed (by belt)</option><option value="addsub">Add / subtract</option><option value="chain">Chains</option><option value="mul">Multiply</option><option value="div">Divide</option><option value="adv">Advanced</option><option value="friends">Friends</option></select></label>
+  <label>Code <input id="wc" value="${mkCode('classic',P().belt)}" maxlength="9" autocapitalize="characters"></label><div class="btns"><button class="btn">Generate</button><button type="button" class="btn ghost" data-act="doprint">🖨️ Print</button></div></form></div><div id="sheet"></div>`;wsGen()};
+function wsGen(){const code=($('#wc').value.trim().toUpperCase())||mkCode('classic',0),n=+$('#wcount').value,t=$('#wtype').value,Lv=lvl(decode(code).lvl);
+  const c={type:t=='friends'?'addsub':t=='mix'?'mix':t,pat:t=='friends'?'both':undefined,dig:Lv.dig,rows:Lv.rows,neg:false,rem:true,pool:Lv.pool},r=mulberry(hash(code+t+n)),qs=Array.from({length:n},()=>genQ(c,r));
+  $('#sheet').innerHTML=`<div class="ws"><h2>mh's abcs — Worksheet</h2><p>Name: ____________ Date: __________ · Level ${bname(decode(code).lvl)} · Code ${esc(code)}</p><ol class="wl">${qs.map(q=>`<li>${esc(q.text)} = ______</li>`).join('')}</ol></div>
+  <div class="ws key"><h2>Answer key · ${esc(code)}</h2><ol class="wl">${qs.map(q=>`<li>${q.ans}</li>`).join('')}</ol></div>`}
+/* parent / teacher */
+const week=p=>{let s=0,q=0,a=0,hn=0;const c=Date.now()-7*864e5;for(let i=0;i<7;i++){const d=p.days[dayKey(-i)];if(d){s+=d.s;q+=d.q}}p.hist.filter(h=>h.t>c).forEach(h=>{a+=h.acc*h.n;hn+=h.n});return{min:Math.round(s/60),q,acc:hn?Math.round(a/hn*100):0}};
+const report=()=>"mh's abcs weekly report\n"+S.profiles.map(p=>{const w=week(p);return`${p.name} (${bname(p.belt)}): ${w.min} min, ${w.q} sums, ${w.acc}% accuracy this week. Topics: ${Object.entries(p.tp).map(([k,v])=>TL[k]+' '+Math.round(v.c/(v.c+v.w)*100)+'%').join(', ')||'–'}. Streak ${streak(p)} days.`}).join('\n');
+V.parent=()=>{const p=P();$('#app').innerHTML=`<h1>Parent / teacher view</h1><div class="card" style="overflow-x:auto"><table><tr><th>Profile</th><th>Belt</th><th>Min this week</th><th>Sums</th><th>Accuracy</th></tr>${S.profiles.map(q=>{const w=week(q);return`<tr><td>${q.av} ${esc(q.name)}</td><td>${bname(q.belt)}</td><td>${w.min}</td><td>${w.q}</td><td>${w.acc}%</td></tr>`}).join('')}</table></div>
+  <div class="card"><h2>${esc(p.name)} — accuracy per topic</h2><div class="bars">${Object.entries(p.tp).map(([k,v])=>{const a=Math.round(v.c/(v.c+v.w)*100);return`<div><span style="width:110px">${TL[k]}</span><i style="width:${a*2}px"></i> ${a}%</div>`}).join('')||'<p class="mut">No data yet.</p>'}</div></div><button class="btn" data-act="copyrep">Copy report</button>`};
+const AV=['🦊','🐼','🐯','🐸','🦄','🐙','🚀','🌈','🐧','🦋'],THEMES=[['sunrise','Sunrise'],['mint','Mint'],['ocean','Ocean'],['candy','Candy'],['midnight','Midnight']];
+V.settings=()=>{const vs=Sp.voices();$('#app').innerHTML=`<h1>Settings</h1><div class="card"><h2>Theme</h2><div class="chips">${THEMES.map(t=>`<button class="chip" data-th="${t[0]}" aria-pressed="${S.theme==t[0]}">${t[1]}</button>`).join('')}</div></div>
+  <div class="card"><h2>Sound & haptics</h2><label><input type="checkbox" data-act="mute2" ${S.mute?'checked':''}> Mute all sounds and vibration</label>
+  <label>Flash speed: <output>${S.set.flash}s</output><input type="range" data-set="flash" min=".3" max="3" step=".1" value="${S.set.flash}"></label><label>Rhythm tempo: <output>${S.set.bpm}</output> bpm<input type="range" data-set="bpm" min="30" max="120" step="5" value="${S.set.bpm}"></label></div>
+  <div class="card"><h2>Listen mode</h2>${Sp.ok?`<label>Voice <select data-set="voice"><option value="">Default</option>${vs.map(v=>`<option value="${esc(v.name)}" ${S.set.voice==v.name?'selected':''}>${esc(v.name)} (${v.lang})</option>`).join('')}</select></label>
+  <label>Language <select data-set="lang">${['en-US','en-GB','hi-IN','es-ES','fr-FR','de-DE'].map(l=>`<option ${S.set.lang==l?'selected':''}>${l}</option>`).join('')}</select></label><label>Rate: <output>${S.set.rate}</output><input type="range" data-set="rate" min=".5" max="2" step=".1" value="${S.set.rate}"></label><button class="btn ghost" data-act="testvoice">Test voice</button>`:'<p class="mut">Speech is not available in this browser.</p>'}</div>
+  <div class="card"><h2>Profiles</h2><div class="chips">${S.profiles.map((p,i)=>`<span class="chip" style="padding:0"><button class="chip" data-prof="${i}" aria-pressed="${i==S.cur}">${p.av} ${esc(p.name)}</button>${S.profiles.length>1?`<button class="chip" data-delp="${i}" aria-label="Delete ${esc(p.name)}">🗑</button>`:''}</span>`).join('')}</div>
+  <form data-addp style="margin-top:12px"><input name="nm" placeholder="Name" maxlength="14" required aria-label="Name"> <select name="av" aria-label="Avatar">${AV.map(a=>`<option>${a}</option>`).join('')}</select> <button class="btn">Add profile</button></form></div>`};
+/* onboarding tour */
+function tour(i){const T=[['#logo',"Welcome to mh's abcs! Practise mental maths with numbers only."],['#startBtn','Press Start, type your answer and hit Enter. It adapts to your belt.'],['#daily','A new daily challenge appears every day — identical for everyone.'],['#tiles','Try Flash, Listen, Friends and more to train your brain in different ways.'],['#belt','Pass grading tests to climb from 10th Kyu to Dan 10!']];
+  $$('.hl').forEach(e=>e.classList.remove('hl'));let t=$('#tour');if(i>=T.length||view!='home'){S.tour=1;save();t&&t.remove();return}
+  const e=$(T[i][0]);if(e){e.classList.add('hl');e.scrollIntoView({block:'center'})}
+  if(!t){t=document.createElement('div');t.id='tour';t.className='tour';t.setAttribute('role','dialog');t.setAttribute('aria-label','Quick tour');document.body.append(t)}
+  t.innerHTML=`<p>${T[i][1]}</p><button class="btn" data-tour="${i+1}">${i==T.length-1?'Done':'Next'}</button><button class="btn ghost" data-tour="99">Skip</button>`}
+/* ================= EVENTS ================= */
+function key(k){const ai=$('#ai');if(!ai||ai.disabled)return;if(k=='⌫')ai.value=ai.value.slice(0,-1);else if(k=='Enter')return submit();else ai.value+=k=='−'?'-':k=='r'?' r ':k;ai.focus()}
+function act(a){const p=P();switch(a){
+  case'quit':end();break;case'submit':submit();break;
+  case'replay':{const s=sess;if(s&&s.ready&&!s.q.rep){s.q.rep=1;s.xp=Math.max(0,s.xp-5);s.replays++;present(s.q)}break}
+  case'mute':S.mute=!S.mute;save();hdr();break;case'mute2':S.mute=$('[data-act=mute2]').checked;save();hdr();break;
+  case'retry':start(lastEnd.mode,{...lastEnd.o,code:lastEnd.code,exact:1});break;
+  case'again':lastEnd.mode=='review'?go('garden'):start(lastEnd.mode,{...lastEnd.o,exact:1});break;
+  case'share':copy(`mh's abcs seed ${lastEnd.code} (${lastEnd.mode}) — enter it on the home screen to get the same sums!`);break;
+  case'review':if(p.mist.length)start('review',{pool:[...p.mist]});break;
+  case'testvoice':Sp.say('One, plus two, minus three');break;
+  case'newprev':prev();break;case'startcustom':start('custom',{cfg:cfgBC()});break;
+  case'doprint':p.flags.print=1;award(p,{});save();window.print();break;
+  case'copyrep':copy(report());break}}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-go],[data-start],[data-act],[data-k],[data-tour],[data-th],[data-drill],[data-prof],[data-delp],[data-ld],[data-dp]');if(!t)return;const D=t.dataset,p=P();
+  if(D.go)return go(D.go);if(D.start)return start(D.start);if(D.k!==undefined)return key(D.k);if(D.tour!==undefined)return tour(+D.tour);
+  if(D.th){S.theme=D.th;document.documentElement.dataset.theme=D.th;save();return V.settings()}
+  if(D.drill)return start('classic',{force:FORCE[D.drill]});
+  if(D.prof!==undefined){S.cur=+D.prof;save();hdr();return V.settings()}
+  if(D.delp!==undefined){if(confirm('Delete this profile and its progress?')){S.profiles.splice(+D.delp,1);S.cur=0;save();hdr();V.settings()}return}
+  if(D.ld!==undefined){BC={...BC,...p.presets[+D.ld].cfg};return V.build()}
+  if(D.dp!==undefined){p.presets.splice(+D.dp,1);save();return V.build()}
+  if(D.act)act(D.act)});
+document.addEventListener('submit',e=>{e.preventDefault();const f=e.target,D=f.dataset,p=P();
+  if('seed' in D){const v=f.querySelector('input').value.trim().toUpperCase();/^MMKS-[A-HJ-NP-Z2-9]{4}$/.test(v)?start('classic',{code:v}):toast('Codes look like MMKS-7F3K')}
+  else if('addp' in D){const nm=f.nm.value.trim();if(!nm)return;S.profiles.push(newProfile(nm,f.av.value));S.cur=S.profiles.length-1;save();hdr();V.settings()}
+  else if('pre' in D){if(p.presets.length>=5)return toast('Up to 5 presets');p.presets.push({name:f.nm.value.trim(),cfg:{...BC}});save();V.build()}
+  else if('ws' in D)wsGen()});
+document.addEventListener('input',e=>{const el=e.target;
+  if(el.id=='ai'){el.value=el.value.replace(/[^0-9.\-−rR ]/g,'');return}
+  if(el.id=='wcount'){$('#wn').textContent=el.value;return}
+  if(el.dataset.set){const k=el.dataset.set;S.set[k]=['voice','lang'].includes(k)?el.value:+el.value;if(k=='flash'&&sess)sess.c.speed=+el.value;save();const o=el.closest('label')?.querySelector('output');if(o)o.textContent=el.value+(k=='flash'?'s':'');return}
+  if(el.dataset.bc){const k=el.dataset.bc;if(k=='ops')BC.ops=$$('[data-bc=ops]:checked').map(x=>x.value);else if(el.type=='checkbox')BC[k]=el.checked;else if(el.tagName=='SELECT')BC[k]=el.value;else BC[k]=+el.value;
+    const o=$('#o_'+k);if(o)o.textContent=BC[k];prev()}});
+document.addEventListener('keydown',e=>{if(e.target.id=='ai'&&e.key=='Enter'){e.preventDefault();submit()}});
+try{speechSynthesis.onvoiceschanged=()=>{if(view=='settings')V.settings()}}catch(e){}
+/* ================= INIT ================= */
+document.documentElement.dataset.theme=S.theme;save();hdr();go('home');setInterval(cd,1000);
+</script>
+</body>
+</html>
